@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { baseUrl } from "@/const";
 
-const optionsStore = useOptionsStore()
-// const { toggleDark } = optionsStore
-const { isDark, profile, others } = storeToRefs(optionsStore)
 const authStore = useAuthStore()
 
 function openProfile() {

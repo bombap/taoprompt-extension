@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js'
 
-const SECRET_KEY = 'your-secret-key-111' // nên để trong biến môi trường
+const SECRET_KEY = 'your-secret-key-111'
 
 export const encrypt = (data: any, isJSON: boolean = true): string => {
   const json = isJSON ? JSON.stringify(data) : data

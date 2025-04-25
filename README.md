@@ -32,7 +32,7 @@ TaoPrompt Extension là tiện ích mở rộng trình duyệt giúp bạn tạo
 ### Chrome
 1. Tải về hoặc clone repository này:
    ```bash
-   git clone https://github.com/yourusername/taoprompt-extension.git
+   git clone https://github.com/bombap/taoprompt-extension.git
    cd taoprompt-extension
    ```
 2. Cài đặt dependencies:
@@ -72,7 +72,7 @@ TaoPrompt Extension là tiện ích mở rộng trình duyệt giúp bạn tạo
 ## 💡 Đóng góp & phát triển
 
 - Fork repo, tạo branch mới và gửi pull request.
-- Báo lỗi hoặc đề xuất tính năng mới tại [Issues](https://github.com/yourusername/taoprompt-extension/issues).
+- Báo lỗi hoặc đề xuất tính năng mới tại [Issues](https://github.com/bombap/taoprompt-extension/issues).
 
 ### Cấu trúc thư mục chính
 
@@ -105,6 +105,7 @@ TaoPrompt Extension là tiện ích mở rộng trình duyệt giúp bạn tạo
 - [Tailwind CSS](https://tailwindcss.com/)
 - [webextension-polyfill](https://github.com/mozilla/webextension-polyfill)
 - [Marked](https://github.com/markedjs/marked) (markdown parser)
+- [Nuxt UI](https://ui.nuxt.com/)
 
 ---
 
