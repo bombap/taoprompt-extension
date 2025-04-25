@@ -1,0 +1,33 @@
+{
+  "menu": {
+    "about": "About",
+    "contact": "Contact",
+    "home": "Home"
+  },
+  "home": {
+    "sayHi": "Hi!",
+    "signIn": "Sign in to use Taoprompt",
+    "about": "About us"
+  },
+  "notifications": {
+    "error": "Error occurred.",
+    "success": "Success!",
+    "warning": "Warning!"
+  },
+  "settings": {
+    "cancelButton": "Cancel",
+    "saveButton": "Save",
+    "title": "Settings",
+    "userInterface": "User interface",
+    "userInterfaceDescription": "Change application interface settings.",
+    "enableDarkTheme": "Dark Theme",
+    "changeLanguage": "Change Language",
+    "profile": "Profile",
+    "profileDescription": "Change your name and more.",
+    "updateProfile": "Update Profile",
+    "logout": "Log out"
+  },
+  "updated": "Updated",
+  "welcomeMessage": "Welcome to our Chrome extension!",
+  "goBack": "Go back"
+}

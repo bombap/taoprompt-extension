@@ -1,0 +1,44 @@
+:root {
+  --ui-primary: #000000;
+}
+
+.dark {
+  --ui-primary: #ffffff;
+  --ui-bg: var(--color-stone-800);
+  --ui-bg-elevated: var(--color-stone-800);
+}
+
+html {
+  background-color: #000;
+}
+
+body {
+  height: 600px;
+  width: 384px;
+  position: relative;
+  margin: auto;
+}
+
+@media (min-height: 700px) {
+  body {
+    height: 100vh;
+  }
+}
+
+#app {
+  height: 100%;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 20%, 0);
+    transform: translate3d(0, 20%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}

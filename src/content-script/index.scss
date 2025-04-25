@@ -1,0 +1,102 @@
+// This file is used to style the iframe that is injected into the page
+@use "tailwindcss";
+@use "@nuxt/ui";
+
+@plugin "@tailwindcss/typography";
+
+@plugin "daisyui" {
+  logs: false;
+}
+
+
+#taoprompt-app {
+  background-color: transparent !important;
+  &[data-ai="claude.ai"] {
+    margin-left: 12px;
+  }
+  &[data-ai="copilot.microsoft.com"] {
+    margin-top: 4px;
+  }
+}
+
+#taoprompt-container {
+  height: 36px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+
+
+
+  &::before {
+    content: "";
+    width: 1px;
+    height: 68%;
+    background-color: var(--border-default);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+
+.taoprompt-generate-button {
+  padding: 0 8px;
+  height: 36px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  background: linear-gradient(90deg, rgb(255, 47, 47), rgb(239, 123, 22));
+  border: 1px solid rgb(255, 47, 47);
+  color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  white-space: nowrap;
+  overflow: hidden;
+
+  &:hover {
+      opacity: 0.9;
+  }
+
+  &.isLoading {
+    cursor: wait;
+  }
+}
+
+.taoprompt-undo-button {
+  padding: 0 8px;
+  height: 36px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  background-color: #000;
+  color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  white-space: nowrap;
+  overflow: hidden;
+
+  &:hover {
+      opacity: 0.9;
+  }
+
+  &.isLoading {
+    cursor: wait;
+  }
+}

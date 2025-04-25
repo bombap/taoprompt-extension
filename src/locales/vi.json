@@ -1,0 +1,33 @@
+{
+  "menu": {
+    "about": "About",
+    "contact": "Contact",
+    "home": "Home"
+  },
+  "home": {
+    "sayHi": "Chào bạn!",
+    "signIn": "Đăng nhập để sử dụng Taoprompt",
+    "about": "Về chúng tôi"
+  },
+  "notifications": {
+    "error": "Error occurred.",
+    "success": "Success!",
+    "warning": "Warning!"
+  },
+  "settings": {
+    "cancelButton": "Hủy",
+    "saveButton": "Lưu",
+    "title": "Cài đặt",
+    "userInterface": "Giao diện người dùng",
+    "userInterfaceDescription": "Thay đổi cài đặt giao diện ứng dụng.",
+    "enableDarkTheme": "Chủ đề tối",
+    "changeLanguage": "Thay đổi ngôn ngữ",
+    "profile": "Hồ sơ",
+    "profileDescription": "Thay đổi tên của bạn và nhiều hơn nữa.",
+    "updateProfile": "Cập nhật hồ sơ",
+    "logout": "Đăng xuất"
+  },
+  "updated": "Updated",
+  "welcomeMessage": "Welcome to our Chrome extension!",
+  "goBack": "Trở lại"
+}
