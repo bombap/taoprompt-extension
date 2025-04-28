@@ -25,9 +25,11 @@
     "profile": "Hồ sơ",
     "profileDescription": "Thay đổi tên của bạn và nhiều hơn nữa.",
     "updateProfile": "Cập nhật hồ sơ",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "promptGenerationDescription": "Chọn ngôn ngữ và các tuỳ chỉnh khác để tối ưu hóa việc tạo prompt cho các nền tảng AI."
   },
   "updated": "Updated",
   "welcomeMessage": "Welcome to our Chrome extension!",
-  "goBack": "Trở lại"
+  "goBack": "Trở lại",
+  "result-language": "Ngôn ngữ đầu ra"
 }

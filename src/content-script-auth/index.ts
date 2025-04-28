@@ -10,11 +10,19 @@ const EXTENSION_ID = chrome.runtime.id;
     const { type, payload } = event.data
 
     if (type === "SEND_AUTH") {
-
       chrome.runtime.sendMessage(EXTENSION_ID, {
         type: "SEND_AUTH",
         data: payload,
       })
     }
+
+    if (type === "OPEN_POPUP") {
+      chrome.runtime.sendMessage(EXTENSION_ID, {
+        type: "OPEN_POPUP",
+        data: payload,
+      })
+    }
+
+
   })
 })()

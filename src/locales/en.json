@@ -25,9 +25,12 @@
     "profile": "Profile",
     "profileDescription": "Change your name and more.",
     "updateProfile": "Update Profile",
-    "logout": "Log out"
+    "logout": "Log out",
+    "promptGeneration": "Prompt Generation",
+    "promptGenerationDescription": "Select the language and other preferences to optimize prompt creation for AI platforms."
   },
   "updated": "Updated",
   "welcomeMessage": "Welcome to our Chrome extension!",
-  "goBack": "Go back"
+  "goBack": "Go back",
+  "result-language": "Output language"
 }

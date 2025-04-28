@@ -6,7 +6,7 @@ import GenerateButton from './components/GenerateButton.vue';
 import BackButton from './components/BackButton.vue';
 import { configEl, currentAiConfig, isGemini, isDeepSeek, isGrok, isGrokX, isCopilot } from './config';
 import { useLiveTypingText } from '../composables/useLiveTypingText';
-import { loading_icon } from '@/const';
+import { baseUrl, loading_icon } from '@/const';
 
 
 
@@ -463,18 +463,18 @@ function listenAuth() {
       // Có thể thực hiện cleanup hoặc kết thúc giao diện ở đây
     }
     if (message.type === 'TAOPROMPT_ERROR') {
-      console.log('Stream error:', message.data);
       if (message.code === 401) {
         // window.open(chrome.runtime.getURL("src/ui/action-popup/index.html"), '_blank');
-
-
-
         chrome.runtime.sendMessage(
           {
             type: "OPEN_POPUP",
           });
 
       } else {
+        if(message.error_code === "DAILY_LIMIT_REACHED") {
+          window.open(`${baseUrl}/pricing`, '_blank');
+          return
+        } 
         alert(message.data)
       }
       // Có thể thực hiện cleanup hoặc kết thúc giao diện ở đây

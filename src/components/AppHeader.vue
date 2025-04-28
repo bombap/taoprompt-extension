@@ -1,4 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { isDark, toggleDark } = useTheme()
+
+</script>
 
 <template>
   <div class="fixed top-0 w-full left-0 top-0 z-50">
@@ -6,8 +9,10 @@
       class="flex items-center justify-between max-w-[384px] h-[64px] mx-auto w-full dark:bg-black bg-stone-100 text-primary-content p-2 border-[.5px] border-stone-300 dark:border-stone-700">
       <div class="flex-1 pl-2">
         <RouterLink to="/" class="flex gap-2 items-center">
-          <UIcon name="fluent:prompt-16-filled" class="md:size-10 size-8 dark:text-white text-black" />
-          <div class="text-base font-semibold dark:text-white text-black">TaoPrompt</div>
+
+          <img v-if="isDark" src="@assets/logo-full-dark.svg" class="h-10">
+          <img v-else src="@assets/logo-full.svg" class="h-10">
+        
         </RouterLink>
       </div>
       <div class="flex-none flex items-center gap-2">

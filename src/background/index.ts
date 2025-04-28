@@ -79,8 +79,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true
   }
 
+  if (message.type === "SEND_PROMPT_SETTINGS") {
+    chrome.storage.local.set({
+      language_output: message.data.language_output,
+    })
+
+    sendResponse(true)
+    return true
+  }
+
   if (message.type === "OPEN_POPUP") {
-    chrome.action.setPopup({ popup: "src/ui/action-popup/index.html" })
+    // chrome.action.setPopup({ popup: "src/ui/action-popup/index.html" })
     chrome.action.openPopup()
     sendResponse(true)
     return true
@@ -111,9 +120,12 @@ async function createPromptHandle(data: CreatePromptSchema, tabId: number) {
   let streamTextDecode = ``
   promptStreamList.value = []
 
-  const tokenRaw = await chrome.storage.local.get("token")
+  const storageRaw = await chrome.storage.local.get([
+    "token",
+    "language_output",
+  ])
 
-  const token = decrypt(tokenRaw.token, false)
+  const token = decrypt(storageRaw.token, false)
   if (!token) {
     chrome.tabs.sendMessage(tabId, {
       type: "TAOPROMPT_ERROR",
@@ -123,14 +135,25 @@ async function createPromptHandle(data: CreatePromptSchema, tabId: number) {
     throw new Error("Please login to continue")
   }
 
-  const response = await createPrompt(data, token)
+  const response = await createPrompt(
+    {
+      ...data,
+      settings: {
+        ...data.settings,
+        language: storageRaw.language_output,
+      },
+    },
+    token,
+  )
 
   if (!response.ok) {
     const body = await response.json()
-    console.log("Error create prompt:", body)
+    console.log("Error create prompt:", body, response)
     chrome.tabs.sendMessage(tabId, {
       type: "TAOPROMPT_ERROR",
       data: body.error,
+      error_code: body.code,
+      code: response.status
     })
     throw new Error(body.error)
   }
