@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { baseUrl } from "@/const";
+import { TAOPROMPT_EVENTS } from "@/src/const.events";
 
 const authStore = useAuthStore()
 
@@ -37,12 +38,11 @@ const languages = Object.keys(LANGUAGES).map(key => ({
 
 watch(prompt, () => {
 
-
-  chrome.runtime.sendMessage({
-    type: "SEND_PROMPT_SETTINGS",
+  sendToBackground({
+    type: TAOPROMPT_EVENTS.SETTINGS_UPDATE,
     data: {
       language_output: prompt.value.language
-    },
+    }
   })
 }, {
   deep: true

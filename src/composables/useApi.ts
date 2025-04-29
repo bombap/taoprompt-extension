@@ -4,19 +4,11 @@ class Api {
   constructor() {}
 
   private sendErrorContentScript(error: string) {
-    if (chrome.tabs && chrome.tabs.query) {
-      chrome.tabs.query({}, (tabs) => {
-        for (let tab of tabs) {
-          if (tab.id && tab.url) {
-            chrome.tabs.sendMessage(tab.id, {
-              type: "TAOPROMPT_ERROR",
-              data: error,
-              code: 401
-            })
-          }
-        }
-      })
-    }
+    sendToAllTabs({
+      type: "TAOPROMPT_ERROR",
+      data: error,
+      code: 401
+    })
   }
 
   private getHeaders() {

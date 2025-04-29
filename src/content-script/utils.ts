@@ -1,3 +1,5 @@
+import { TAOPROMPT_EVENTS } from "../const.events"
+
 const sheetsMap = new Map()
 export function updateStyle(id: string, content: string) {
   let style = sheetsMap.get(id)
@@ -24,7 +26,7 @@ export function updateStyle(id: string, content: string) {
         const shadowEl = root?.shadowRoot
         shadowEl?.appendChild(style)
 
-        const myEvent = new CustomEvent("taoprompt-style-updated", {
+        const myEvent = new CustomEvent(TAOPROMPT_EVENTS.LOADED, {
           detail: {},
         })
 
