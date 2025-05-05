@@ -5,9 +5,9 @@
         <span v-if="isThinking || isGenerating" v-html="loading_icon"></span>
         <span v-else v-html="mingcute_ai_fill"></span>
 
-        <span v-if="isThinking" class="font-semibold">Thinking...</span>
+        <!-- <span v-if="isThinking" class="font-semibold">Thinking...</span>
         <span v-else-if="isGenerating" class="font-semibold">Generating...</span>
-        <span v-else class="font-semibold">Generate Prompt</span>
+        <span v-else class="font-semibold">Generate Prompt</span> -->
     </button>
 </template>
 

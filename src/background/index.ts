@@ -50,14 +50,15 @@ chrome.runtime.onInstalled.addListener(async (opt) => {
 // )
 
 listenMessages((message, sender, sendResponse) => {
-  console.log("✅ Got message from content script:", message)
+  // console.log("✅ Got message from content script:", message)
 
   switch (message.type) {
     case TAOPROMPT_EVENTS.AUTH_REQUEST:
       {
-        chrome.storage.local.get(["user", "token"], (result) => {
+        chrome.storage.local.get(["user", "token", "interface"], (result) => {
           sendResponse({
             user: decrypt(result.user, true),
+            interface: result.interface
           })
         })
       }
@@ -88,7 +89,14 @@ listenMessages((message, sender, sendResponse) => {
       {
         chrome.storage.local.set({
           language_output: message.data.language_output,
+          interface: message.data.interface,
         })
+
+        sendToAllTabs({
+          type: TAOPROMPT_EVENTS.SETTINGS_UPDATE,
+          data: message.data
+        })
+
         sendResponse({
           success: true,
         })
@@ -109,6 +117,20 @@ listenMessages((message, sender, sendResponse) => {
             })
           })
       }
+      return true
+    case TAOPROMPT_EVENTS.INJECT_PROMPT:
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        if (tabs.length === 0) return
+        const activeTab = tabs[0]
+        sendToTab(activeTab.id || 0, {
+          type: TAOPROMPT_EVENTS.INJECT_PROMPT,
+          data: message.data,
+        })
+      })
+
+      sendResponse({
+        success: true,
+      })
       return true
     default:
       return false

@@ -373,6 +373,12 @@
     "watchThrottled": true,
     "watchTriggerable": true,
     "watchWithFilter": true,
-    "whenever": true
+    "whenever": true,
+    "cn": true,
+    "NotificationOptions": true,
+    "Prompt": true,
+    "PromptSearchParams": true,
+    "useNotification": true,
+    "usePromptDB": true
   }
 }

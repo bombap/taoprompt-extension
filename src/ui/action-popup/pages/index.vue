@@ -95,8 +95,8 @@ const particlesColor = computed(() => (isDark.value ? "#FFFFFF" : "#000000"));
         <div>
           <UButton @click="openPlan" color="primary" size="sm" class="cursor-pointer">
             {{
-              authStore.user?.subscriptionId ? 'Premium' : 'Free'
-            }} Plan
+              authStore.user?.subscriptionId ? 'PRO' : 'Free'
+            }}
           </UButton>
         </div>
       </div>

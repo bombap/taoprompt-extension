@@ -100,3 +100,48 @@
     cursor: wait;
   }
 }
+
+
+.taoprompt-floating-button {
+  position: fixed;
+  top: 30%;
+  // right: -76px;
+  right: 0;
+  width: 130px;
+  height: 80px;
+  // border-radius: 50%;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+
+
+.button-flubber-container {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9999;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-flubber {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: transform 0.2s ease; /* Only for scale effect, not for morphing */
+}
+
+.button-flubber:hover {
+  transform: scale(1.05);
+}

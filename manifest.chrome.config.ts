@@ -5,6 +5,6 @@ import ManifestConfig from "./manifest.config"
 export default defineManifest((env) => {
   return {
     ...ManifestConfig,
-    key: env["CHROME_ADDON_KEY"],
+    key: "cjihhfeeglpfaoiaihomlggbapdigjal",
   }
 })

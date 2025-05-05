@@ -73,6 +73,7 @@ export interface PromptItemOnSidebar {
   id: string;
   title: string;
   createdAt?: string;
+  finalPrompt?: string;
 }
 
 export const PromptPreviewStatus = {

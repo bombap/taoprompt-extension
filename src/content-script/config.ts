@@ -82,6 +82,18 @@ export const configEl = {
       return ""
     },
   },
+  test: {
+    inputSelector: `#prompt-textarea`,
+    isInsertBefore: false,
+    appendSelector: (document: Document) => {
+      const parentEl = document.querySelector("#prompt-actions")
+      if (parentEl) {
+        const selector = getFullSelector(parentEl) || ""
+        return selector
+      }
+      return ""
+    },
+  },
 }
 
 export const isDeepSeek = location.hostname === "chat.deepseek.com"
@@ -89,6 +101,7 @@ export const isGemini = location.hostname === "gemini.google.com"
 export const isGrok = location.hostname === "grok.com"
 export const isGrokX = location.href === "https://x.com/i/grok"
 export const isCopilot = location.hostname === "copilot.microsoft.com"
+export const isTest = location.hostname === "localhost"
 
 export const currentAiConfig = computed(() => {
   switch (window.location.hostname) {
@@ -106,6 +119,8 @@ export const currentAiConfig = computed(() => {
       return configEl.grokX
     case "copilot.microsoft.com":
       return configEl.copilot
+    case "localhost":
+      return configEl.test
     default:
       return null
   }

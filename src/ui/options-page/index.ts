@@ -5,13 +5,14 @@ import { appRouter } from "src/utils/router"
 import { createApp } from "vue"
 import App from "./app.vue"
 import "./index.scss"
+import ui from "@nuxt/ui/vue-plugin"
 
 appRouter.addRoute({
   path: "/",
   redirect: "/options-page",
 })
 
-const app = createApp(App).use(i18n).use(notivue).use(pinia).use(appRouter)
+const app = createApp(App).use(i18n).use(notivue).use(pinia).use(appRouter).use(ui)
 
 app.mount("#app")
 

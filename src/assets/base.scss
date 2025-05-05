@@ -44,4 +44,13 @@ select {
 
 :root {
   --ui-primary: #000000;
+  --color-primary: #000000 !important;
+}
+
+
+.dark {
+  --ui-primary: #ffffff;
+  --ui-bg: var(--color-stone-800);
+  --ui-bg-elevated: var(--color-stone-800);
+  --color-primary: #ffffff !important;
 }

@@ -42,6 +42,7 @@ export default {
         "https://grok.com/*",
         "https://x.com/i/grok",
         "https://copilot.microsoft.com/*",
+        // "http://localhost:3000/extension-chatbot",
       ],
       run_at: "document_start",
     },

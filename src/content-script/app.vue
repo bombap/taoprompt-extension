@@ -4,9 +4,10 @@ import { marked } from 'marked'
 import { CreatePromptSchema, User } from '@/types';
 import GenerateButton from './components/GenerateButton.vue';
 import BackButton from './components/BackButton.vue';
-import { currentAiConfig, isGemini, isDeepSeek, isGrok, isGrokX, isCopilot } from './config';
+import { currentAiConfig, isGemini, isDeepSeek, isGrok, isGrokX, isCopilot, isTest } from './config';
 import { baseUrl, loading_icon } from '@/const';
 import { TAOPROMPT_EVENTS } from '../const.events';
+import ButtonFlubber from './components/ButtonFlubber.vue';
 
 
 if (isGemini) {
@@ -56,7 +57,7 @@ const backButton = ref<InstanceType<typeof BackButton> | null>(null)
 
 
 const isTextAreaInput = computed(() => {
-  if (isDeepSeek || isGrok || isGrokX || isCopilot) {
+  if (isDeepSeek || isGrok || isGrokX || isCopilot || isTest) {
     return true
   }
   return false
@@ -77,9 +78,45 @@ function getInputValue() {
   return "";
 }
 
+function setTextToInput(_text: string) {
+  let text = formatStringStreamText(_text)
+  text = text.replaceAll(/\\"/g, '"')
+
+  if (!isTextAreaInput.value) {
+    text = text.replaceAll(/</g, '&lt;').replaceAll(/>/g, '&gt;')
+  }
+  // 
+  if (!currentAiConfig.value) return
+  const inputEl = document.querySelector(currentAiConfig.value.inputSelector) as HTMLElement
+
+  if (isTextAreaInput.value) {
+    (inputEl as HTMLInputElement).value = text;
+
+    (inputEl as HTMLInputElement).innerText = text;
+
+    if (isDeepSeek) {
+      (inputEl as HTMLInputElement).parentElement!.children[1]!.innerHTML = text;
+    }
+  } else {
+    const val = marked.parse(text)
+    if (val instanceof Promise) {
+      val.then((v) => {
+        inputEl.innerHTML = v
+      })
+    } else {
+      inputEl.innerHTML = val
+    }
+  }
+
+  (inputEl as HTMLInputElement).dispatchEvent(new Event('input', { bubbles: true }));
+
+  placeCaretAtEnd(inputEl)
+}
+
 const isGenerating = ref(false);
 const isThinking = ref(false);
 const prevInputValue = ref('')
+const openDrawer = ref(false)
 
 const formData = ref<CreatePromptSchema>({
   prompt: '',
@@ -93,6 +130,10 @@ const formData = ref<CreatePromptSchema>({
     presence_penalty: 0.1,
     language: 'Vietnamese'
   }
+})
+
+const setting = ref({
+  interface: true
 })
 
 const promptStreamList = ref<string[]>([])
@@ -291,7 +332,20 @@ function onLoaded() {
   loading.value = false
 }
 
+function togglePromptManager() {
+  openDrawer.value = !openDrawer.value
+}
+
 function listenEvents() {
+
+  document.addEventListener("keydown", (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key === "P") {
+      e.preventDefault();
+      // Toggle prompt manager UI (sidepanel, popup...)
+      togglePromptManager();
+    }
+  });
+
   window.addEventListener(TAOPROMPT_EVENTS.LOADED, onLoaded);
   listenMessages((message, sender, sendResponse) => {
     switch (message.type) {
@@ -306,6 +360,10 @@ function listenEvents() {
         return true
       case TAOPROMPT_EVENTS.PROMPT_ERROR:
         onPromptError(message)
+      case TAOPROMPT_EVENTS.INJECT_PROMPT:
+        onInjectPrompt(message)
+      case TAOPROMPT_EVENTS.SETTINGS_UPDATE:
+        setting.value.interface = message.data.interface
         return true
     }
   })
@@ -325,6 +383,10 @@ function onPromptError(message: any) {
     }
     alert(message.data)
   }
+}
+
+function onInjectPrompt(message: any) {
+  setTextToInput(message.data.prompt)
 }
 
 function onDoneCreatePrompt() {
@@ -369,6 +431,8 @@ onMounted(() => {
     payload: {}
   }).then((response) => {
     user.value = response.user
+    setting.value.interface = response.interface
+    console.log("🚀 ~ onMounted ~ setting:", setting.value)
   })
 
   setTimeout(() => {
@@ -385,11 +449,17 @@ onUnmounted(() => {
 })
 
 
+const srcPrompts = chrome.runtime.getURL("src/ui/options-page/index.html#prompts")
 
 </script>
 
 <template>
-  <UApp>
+  <div
+  :style="
+  setting.interface ? '' : 'opacity: 0; pointer-events: none;'
+  "
+  >
+    <UApp>
     <div class="flex ">
       <span v-if="loading" v-html="loading_icon">
       </span>
@@ -403,6 +473,20 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
+
+    <UDrawer direction="right" v-model:open="openDrawer" class="taoprompt-drawer" :ui="{
+      handle: ['!ml-2 !h-[100dvh] !bg-transparent !ml-0 !w-[24px]'],
+      body: '!h-[100%]'
+    }">
+      <template #body>
+        <iframe :src="srcPrompts"></iframe>
+      </template>
+    </UDrawer>
+
+    <div id="taoprompt-floating-button" class="taoprompt-floating-button">
+      <ButtonFlubber :tabs="['@', '|']" @open="openDrawer = true" />
+    </div>
   </UApp>
+  </div>
 </template>
 <style></style>

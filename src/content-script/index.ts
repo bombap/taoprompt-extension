@@ -1,9 +1,15 @@
 import { initVueApp } from "./app"
-import { configEl, currentAiConfig, isDeepSeek, isGrok, isGrokX } from "./config"
+import {
+  configEl,
+  currentAiConfig,
+  isDeepSeek,
+  isGrok,
+  isGrokX,
+} from "./config"
 
-import appCss from './index.scss?inline'
-import injectedJS from './injected-script-ai.ts?script&module'
-
+import appCss from "./index.scss?inline"
+import injectedJS from "./injected-script-ai.ts?script&module"
+import injectStyle from "./inject-style.css?inline"
 
 const script = document.createElement("script")
 script.src = chrome.runtime.getURL(injectedJS)
@@ -54,6 +60,10 @@ function injectElement(targetInput: Element) {
     copyCssVariablesToShadowRoot(shadow)
     initVueApp(mountEl)
     injectDOM(targetInput, container)
+
+    //
+
+    //
   } else {
     injectDOM(targetInput, container)
   }
@@ -61,50 +71,40 @@ function injectElement(targetInput: Element) {
   targetInput.classList.add(`taoprompt-container-parent`)
 
   var link = document.createElement("style")
-  link.textContent = `
-  .taoprompt-container-parent { overflow: visible !important; }
-  #taoprompt-preview {
-  padding-bottom: 12px;
-  }
-
-  .prompt-preview {
-    // border: 1px solid var(--border-default);
-    border: 2px solid rgba(239, 123, 22, .3);
-    padding: 8px;
-    border-radius: 8px;
-    position: relative;
-  }
-
-  .prompt-preview .close {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    cursor: pointer;
-    border: 1px solid rgba(239, 123, 22, .3);
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(239, 123, 22, .3);
-  }
-
-  .taoprompt-disabled-input {
-    pointer-events: none !important;
-  }
-  `
+  link.textContent = injectStyle
   document.head.appendChild(link)
 
   //
 }
 
 function injectDOM(targetInput: Element, el: Element) {
-  if(currentAiConfig.value?.isInsertBefore) {
+  if (currentAiConfig.value?.isInsertBefore) {
     targetInput.parentNode?.insertBefore(el, targetInput)
   } else {
     targetInput.appendChild(el)
   }
+
+  setTimeout(() => {
+    const shadowRoot = el.shadowRoot
+    const buttonA = shadowRoot?.querySelector(
+      "#taoprompt-floating-button",
+    ) as HTMLElement
+
+    buttonA.style.right = `0px`
+
+    setTimeout(() => {
+      const buttonA = shadowRoot?.querySelector(
+        "#taoprompt-floating-button",
+      ) as HTMLElement
+      if (!buttonA) return
+      const buttonBox = buttonA?.getBoundingClientRect()
+      if (buttonBox && buttonA) {
+        const distanceToRight = window.innerWidth - buttonBox.right
+        const delta = distanceToRight + 50
+        buttonA.style.right = `${-delta}px`
+      }
+    }, 300)
+  }, 100)
 }
 
 function initPreview() {

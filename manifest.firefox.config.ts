@@ -6,7 +6,7 @@ export default defineManifest((env) => ({
   ...ManifestConfig,
   browser_specific_settings: {
     gecko: {
-      id: env["FIREFOX_ADDON_ID"],
+      id: "{a689535a-dca3-4370-b2f7-08ef0b3b86e9}",
     },
   },
   background: {
@@ -20,4 +20,5 @@ export default defineManifest((env) => ({
       (permission) => permission !== "background",
     ),
   ],
+  author: "kimduc10a@gmail.com",
 }))

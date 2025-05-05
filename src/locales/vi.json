@@ -26,10 +26,17 @@
     "profileDescription": "Thay đổi tên của bạn và nhiều hơn nữa.",
     "updateProfile": "Cập nhật hồ sơ",
     "logout": "Đăng xuất",
-    "promptGenerationDescription": "Chọn ngôn ngữ và các tuỳ chỉnh khác để tối ưu hóa việc tạo prompt cho các nền tảng AI."
+    "promptGenerationDescription": "Chọn ngôn ngữ và các tuỳ chỉnh khác để tối ưu hóa việc tạo prompt cho các nền tảng AI.",
+    "hideGenerateButton": "Bật giao diện Taoprompt",
+    "hideGenerateButtonDescription": "Bật hoặc tắt giao diện hỗ trợ tạo prompt của Taoprompt trên các nền tảng chatbot AI như ChatGPT, Gemini, Claude, v.v."
   },
   "updated": "Updated",
   "welcomeMessage": "Welcome to our Chrome extension!",
   "goBack": "Trở lại",
-  "result-language": "Ngôn ngữ đầu ra"
+  "result-language": "Ngôn ngữ đầu ra",
+  "setup": {
+    "thankYou": "Cảm ơn bạn đã tải Taoprompt Extension! Chúng tôi rất vui khi bạn sử dụng và hy vọng nó sẽ giúp ích cho công việc của bạn."
+  },
+  "no-prompt": "Bạn chưa có bất kỳ prompt nào.",
+  "more": "Xem thêm"
 }
