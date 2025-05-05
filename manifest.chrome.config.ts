@@ -5,6 +5,6 @@ import ManifestConfig from "./manifest.config"
 export default defineManifest((env) => {
   return {
     ...ManifestConfig,
-    key: "cjihhfeeglpfaoiaihomlggbapdigjal",
+    // key: "cjihhfeeglpfaoiaihomlggbapdigjal",
   }
 })

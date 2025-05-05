@@ -363,7 +363,13 @@ function listenEvents() {
       case TAOPROMPT_EVENTS.INJECT_PROMPT:
         onInjectPrompt(message)
       case TAOPROMPT_EVENTS.SETTINGS_UPDATE:
-        setting.value.interface = message.data.interface
+        {
+          if(typeof message.data.interface === 'boolean') {
+            setting.value.interface = message.data.interface
+          } else {
+            setting.value.interface = true
+          }
+        }
         return true
     }
   })
@@ -431,7 +437,11 @@ onMounted(() => {
     payload: {}
   }).then((response) => {
     user.value = response.user
-    setting.value.interface = response.interface
+    if(typeof response.interface === 'boolean') {
+      setting.value.interface = response.interface
+    } else {
+      setting.value.interface = true
+    }
     console.log("🚀 ~ onMounted ~ setting:", setting.value)
   })
 

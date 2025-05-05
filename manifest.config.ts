@@ -70,7 +70,11 @@ export default {
   permissions: ["background", "activeTab", "storage", "tabs"],
   web_accessible_resources: [
     {
-      resources: ["src/ui/setup/index.html", "src/ui/action-popup/index.html"],
+      resources: [
+        "src/ui/setup/index.html",
+        "src/ui/action-popup/index.html",
+        "src/ui/options-page/index.html",
+      ],
       matches: ["<all_urls>"],
     },
   ],

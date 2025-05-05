@@ -17,7 +17,7 @@ function logout() {
 }
 
 const prompt = ref({
-  language: "Vietnamese",
+  language: "English",
   interface: true
 })
 
@@ -55,7 +55,7 @@ function changeSettingsHandle() {
 onMounted(() => {
   loading.value = true
   chrome.storage.local.get(["language_output", "interface"], (result) => {
-    prompt.value.language = result.language_output
+    prompt.value.language = result.language_output || "English"
     if(typeof result.interface === 'boolean') {
       prompt.value.interface = result.interface
     } else {

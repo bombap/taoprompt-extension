@@ -41,7 +41,7 @@ async function createPromptProcess(data: CreatePromptSchema, tabId: number) {
       ...data,
       settings: {
         ...data.settings,
-        language: storageRaw.language_output,
+        language: storageRaw.language_output || "English",
       },
     },
     token,
