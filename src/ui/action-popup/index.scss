@@ -4,8 +4,8 @@
 
 .dark {
   --ui-primary: #ffffff;
-  --ui-bg: var(--color-stone-800);
-  --ui-bg-elevated: var(--color-stone-800);
+  --ui-bg: var(--color-gray-800);
+  --ui-bg-elevated: var(--color-gray-800);
 }
 
 html {
@@ -14,7 +14,7 @@ html {
 
 body {
   height: 600px;
-  width: 384px;
+  width: 400px;
   position: relative;
   margin: auto;
 }

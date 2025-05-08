@@ -85,7 +85,7 @@ const particlesColor = computed(() => (isDark.value ? "#FFFFFF" : "#000000"));
       <h1 class="animate__animated animate__fadeInUp text-2xl font-semibold">{{ $t('home.sayHi') }} {{ authStore.user?.name }}</h1>
 
       <div v-if="authStore.isAuthenticated"
-        class="animate__fadeInUp animate__animated animate__fast p-3 flex items-center gap-2 border-[.5px] border-stone-300 dark:border-stone-700 bg-stone-100 dark:bg-stone-800 rounded-lg">
+        class="animate__fadeInUp animate__animated animate__fast p-3 flex items-center gap-2 border-[.5px] border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 rounded-lg">
         <UAvatar :src="authStore.user?.image" />
         <div>
           <h3 class="text-sm font-medium !my-0">{{ authStore.user?.name }}</h3>
@@ -108,7 +108,7 @@ const particlesColor = computed(() => (isDark.value ? "#FFFFFF" : "#000000"));
 
       <div class="flex flex-col gap-2">
         <UButton v-for="(app, index) in ai_apps" :key="app.name" size="xl" variant="soft"
-          class="animate__fadeInUp animate__animated animate__fast cursor-pointer bg-stone-100 border-[.5px] border-stone-200 hover:bg-stone-300 dark:border-stone-800 dark:bg-stone-800/60 hover:dark:bg-stone-600/60 dark:text-white"
+          class="animate__fadeInUp animate__animated animate__fast cursor-pointer bg-gray-100 border-[.5px] border-gray-200 hover:bg-gray-300 dark:border-gray-800 dark:bg-gray-800/60 hover:dark:bg-gray-600/60 dark:text-white"
           @click="openApp(app)" trailing-icon="i-ph-arrow-square-out-thin"
           :style="
           {
@@ -130,7 +130,7 @@ const particlesColor = computed(() => (isDark.value ? "#FFFFFF" : "#000000"));
 
 
       <UButton @click="openAbout" size="xl" block variant="soft"
-        class="animate__fadeInUp animate__animated animate__fast cursor-pointer dark:bg-stone-800/60 dark:text-white">
+        class="animate__fadeInUp animate__animated animate__fast cursor-pointer dark:bg-gray-800/60 dark:text-white">
         <UIcon name="i-ph-question" class="size-5" />
         {{ $t('home.about') }}
       </UButton>

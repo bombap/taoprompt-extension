@@ -459,7 +459,7 @@ onUnmounted(() => {
 })
 
 
-const srcPrompts = chrome.runtime.getURL("src/ui/options-page/index.html#prompts")
+const srcPrompts = chrome.runtime.getURL("src/ui/options-page/index.html#/options-page/prompts")
 
 </script>
 

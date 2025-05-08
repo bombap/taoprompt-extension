@@ -45,7 +45,13 @@ const activeLocale = computed(() => {
 </script>
 
 <template>
-  <UDropdownMenu :items="items" :popper="{ placement: 'bottom-end' }">
+  <UDropdownMenu :items="items" :popper="{ placement: 'bottom-end', }"
+
+  :ui="{
+    content: 'z-10',
+    
+  }"
+  >
     <UButton variant="soft" size="sm" class="px-2 py-1 rounded-lg cursor-pointer" :avatar="activeLocale?.avatar">
       <span class="font-medium">{{ currentLocale.toUpperCase() }}</span>
       <template #trailing>

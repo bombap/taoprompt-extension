@@ -1,7 +1,9 @@
 <template>
     <div v-if="props.tabs.length" :class="cn('relative', props.class)"
         style="filter: url(&quot;#exclusionTabsGoo&quot;) drop-shadow(0px 0px 6px rgba(0,0,0,.1)) drop-shadow(0px 0px 1px rgba(0,0,0,.15))"
-        @click="updateActive('')" @mouseover="updateActive('|')" @mouseout="updateActive('')">
+        @click="openHandle(tab)"
+        
+        @mouseover="updateActive('|')" @mouseout="updateActive('')">
         <button v-for="tab in props.tabs" :key="tab"
             @click="openHandle(tab)"
             :class="cn('px-3 h-10 bg-white  text-black transition-all duration-500 cursor-pointer')" :style="{
@@ -56,9 +58,7 @@ function updateActive(tab: string) {
 }
 
 function openHandle(tab: string) {
-    if(tab === '@') {
         emit('open')
-    }
 }
 </script>
 

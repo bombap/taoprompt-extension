@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { baseUrl } from "@/const";
 import { TAOPROMPT_EVENTS } from "src/const.events"
+const version = __VERSION__
 
 const authStore = useAuthStore()
 
@@ -67,12 +68,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="p-4 max-w-[384px] w-full mx-auto">
+  <div class="p-4 max-w-[480px] w-full mx-auto">
     <RouterLinkUp />
     <div
-      class="max-w-xl w-full mx-auto rounded-xl p-4 md:border border-base-200 md:shadow-lg bg-base-100 dark:bg-stone-800">
-
-      <h1 class="text-xl">{{ $t('settings.title') }}</h1>
+      class="max-w-xl w-full mx-auto rounded-xl p-4 md:border border-base-200 md:shadow-lg bg-base-100 dark:bg-gray-800">
 
       <h3 class="text-lg mb-1 mt-3">{{ $t('settings.promptGeneration') }}</h3>
       <p class="text-xs">{{ $t('settings.promptGenerationDescription') }}</p>
@@ -80,7 +79,7 @@ onMounted(() => {
       <div>
         <UFormField :label="$t('result-language')" name="language">
           <USelectMenu v-model="prompt.language" :items="languages" value-key="value" size="xl" variant="soft" :ui="{
-            base: `w-full bg-white dark:bg-stone-800 hover:!bg-stone-200 dark:hover:!bg-stone-700 focus:bg-stone-100 dark:focus:bg-stone-800 border-[.5px] border-stone-300 dark:border-stone-600`,
+            base: `w-full bg-white dark:bg-gray-800 hover:!bg-gray-200 dark:hover:!bg-gray-700 focus:bg-gray-100 dark:focus:bg-gray-800 border-[.5px] border-gray-300 dark:border-gray-600`,
           }" class="cursor-pointer w-[200px] flex-1" @change="changeSettingsHandle">
           </USelectMenu>
         </UFormField>
@@ -129,6 +128,10 @@ onMounted(() => {
         </UButton>
       </div>
 
+    </div>
+
+    <div class="text-xs text-center text-gray-500">
+      <p>TaoPrompt.com v{{ version }}</p>
     </div>
   </div>
 </template>

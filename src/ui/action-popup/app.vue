@@ -37,7 +37,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-slate-50 dark:bg-stone-900 min-h-full">
+  <div class="bg-slate-50 dark:bg-gray-900 min-h-full">
     <AppHeader />
     <div class="prose pt-16">
       <RouterView />

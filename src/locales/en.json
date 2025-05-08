@@ -39,5 +39,10 @@
     "thankYou": "Thank you for downloading the Taoprompt Extension! We're excited to have you onboard and hope it helps improve your workflow."
   },
   "no-prompt": "You do not have any prompts yet",
-  "more": "More"
+  "more": "More",
+  "personal-library": {
+    "security-alert-title": "Heads up!",
+    "security-alert-description": "Your prompts are stored locally on your device for security. We don't share or upload this data anywhere.",
+    "dismiss": "Got it"
+  }
 }

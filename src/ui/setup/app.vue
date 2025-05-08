@@ -4,7 +4,6 @@ const route = useRoute()
 const { isDark, toggleDark } = useTheme()
 
 onMounted(() => {
-  console.log(route)
 })
 </script>
 

@@ -2,7 +2,7 @@
   <div class="w-full h-full flex flex-col justify-center items-center text-center">
     <img src="@assets/logo.png" alt="logo" class="h-20 w-auto mt-0 shadow-lg rounded-xl" />
     <div>
-      <h1 class="mb-1">🎉 {{ isUpdate ? `Updated ${version}` : 'Installed' }} 🚀</h1>
+      <h1 class="mb-1">{{ isUpdate ? `Updated ${version}` : 'Installed' }}</h1>
       <h2 class="mt-0">{{ displayName }}</h2>
     </div>
     <!-- <p>
