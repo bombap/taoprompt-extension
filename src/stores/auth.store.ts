@@ -3,6 +3,12 @@ import { apiBaseUrl } from "~/const"
 import { encrypt, decrypt } from "src/utils/encryption"
 import { api } from "src/composables/useApi"
 
+
+const subscriptionType = {
+  '507443': 'Basic',
+  '525049': 'Pro',
+}
+
 export const useAuthStore = defineStore("auth", () => {
 
 
