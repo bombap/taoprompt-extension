@@ -122,7 +122,7 @@ const formData = ref<CreatePromptSchema>({
   prompt: '',
   settings: {
     mode: 'fastest',
-    model: 'anthropic/claude-3-haiku',
+    model: 'anthropic/claude-3.5-haiku',
     temperature: 1,
     max_tokens: 1000,
     top_p: 0.9,

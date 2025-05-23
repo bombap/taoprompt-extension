@@ -43,5 +43,7 @@
     "security-alert-title": "Lưu ý!",
     "security-alert-description": "Các prompt ở đây được lưu trữ cục bộ trên thiết bị để đảm bảo an toàn. Chúng tôi không chia sẻ hoặc tải dữ liệu này lên bất kỳ đâu.",
     "dismiss": "Đã hiểu"
-  }
+  },
+  "model-select": "Chọn mô hình xử lý\t",
+  "model-warning": "Model này chỉ dành cho gói cao cấp"
 }

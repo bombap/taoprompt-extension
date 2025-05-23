@@ -23,14 +23,14 @@ chrome.runtime.onInstalled.addListener(async (opt) => {
     return
   }
 
-  if (opt.reason === "update") {
-    chrome.tabs.create({
-      active: true,
-      url: chrome.runtime.getURL("src/ui/setup/index.html#/setup/update"),
-    })
+  // if (opt.reason === "update") {
+  //   chrome.tabs.create({
+  //     active: true,
+  //     url: chrome.runtime.getURL("src/ui/setup/index.html#/setup/update"),
+  //   })
 
-    return
-  }
+  //   return
+  // }
 })
 
 // chrome.runtime.onMessageExternal.addListener(
@@ -90,6 +90,7 @@ listenMessages((message, sender, sendResponse) => {
         chrome.storage.local.set({
           language_output: message.data.language_output,
           interface: message.data.interface,
+          model: message.data.model,
         })
 
         sendToAllTabs({

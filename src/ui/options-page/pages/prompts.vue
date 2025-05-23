@@ -55,6 +55,8 @@ function listenEvents() {
     })
 }
 
+authStore.getConfig()
+
 onMounted(() => {
     authFetch()
     listenEvents()

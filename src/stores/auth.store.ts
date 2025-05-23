@@ -11,9 +11,29 @@ export const useAuthStore = defineStore("auth", () => {
 
   const config = ref<Config>({
     plans: [],
+    promptModels: {
+      free: [],
+      paid: [],
+      default: ""
+    }
   })
 
   const isAuthenticated = computed(() => !!token.value)
+
+  const isFreePlan = computed(() => {
+    if (!user.value) return true;
+    return !user.value.subscriptionId;
+  });
+
+  const planName = computed(() => {
+    if (!user.value) return "Free";
+    if (!user.value.subscriptionId) return "Free";
+    return subscriptionType[user.value.subscriptionId] || "Basic";
+  });
+
+  const isProPlan = computed(() => {
+    return planName.value === "Pro";
+  });
 
 
   const getUser = async () => {
@@ -55,6 +75,9 @@ export const useAuthStore = defineStore("auth", () => {
     logout,
     login,
     getConfig,
-    getUser
+    getUser,
+    isFreePlan,
+    planName,
+    isProPlan
   }
 })

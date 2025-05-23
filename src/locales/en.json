@@ -44,5 +44,7 @@
     "security-alert-title": "Heads up!",
     "security-alert-description": "Your prompts are stored locally on your device for security. We don't share or upload this data anywhere.",
     "dismiss": "Got it"
-  }
+  },
+  "model-select": "Select processing model",
+  "model-warning": "This model is only available for premium plans"
 }

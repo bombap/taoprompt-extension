@@ -1,0 +1,6 @@
+.light {
+    input:not([type=radio]):not([type=checkbox]):not([type=file]) {
+        background-color: #fff;
+        border-color: #ccc;
+    }
+}

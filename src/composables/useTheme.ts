@@ -22,6 +22,11 @@ export function useTheme() {
     "light",
   )
 
+  if (!colorSchema.value) {
+    colorSchema.value = "dark"
+    applyTheme("dark")
+  }
+
   const isDark = computed({
     get: () => colorSchema.value === "dark",
     set: (value) => {

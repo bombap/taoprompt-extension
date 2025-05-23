@@ -24,6 +24,7 @@ async function createPromptProcess(data: CreatePromptSchema, tabId: number) {
   const storageRaw = await chrome.storage.local.get([
     "token",
     "language_output",
+    "model",
   ])
 
   const token = decrypt(storageRaw.token, false)
@@ -36,13 +37,20 @@ async function createPromptProcess(data: CreatePromptSchema, tabId: number) {
     throw new Error("Please login to continue")
   }
 
+  let model =
+    storageRaw.model === "anthropic/claude-3-haiku"
+      ? "anthropic/claude-3.5-haiku"
+      : storageRaw.model
+
   const response = await createPrompt(
     {
       ...data,
       settings: {
         ...data.settings,
         language: storageRaw.language_output || "English",
+        model: storageRaw.model || "anthropic/claude-3.5-haiku",
       },
+      from: "extension"
     },
     token,
   )

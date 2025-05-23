@@ -29,6 +29,7 @@ function listenEvents() {
 }
 
 authFetch()
+authStore.getConfig()
 
 onMounted(() => {
   console.log("lang", currentLocale)
