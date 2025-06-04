@@ -84,27 +84,27 @@ function injectDOM(targetInput: Element, el: Element) {
     targetInput.appendChild(el)
   }
 
-  setTimeout(() => {
-    const shadowRoot = el.shadowRoot
-    const buttonA = shadowRoot?.querySelector(
-      "#taoprompt-floating-button",
-    ) as HTMLElement
+  // setTimeout(() => {
+  //   const shadowRoot = el.shadowRoot
+  //   const buttonA = shadowRoot?.querySelector(
+  //     "#taoprompt-floating-button",
+  //   ) as HTMLElement
 
-    buttonA.style.right = `0px`
+  //   buttonA.style.right = `0px`
 
-    setTimeout(() => {
-      const buttonA = shadowRoot?.querySelector(
-        "#taoprompt-floating-button",
-      ) as HTMLElement
-      if (!buttonA) return
-      const buttonBox = buttonA?.getBoundingClientRect()
-      if (buttonBox && buttonA) {
-        const distanceToRight = window.innerWidth - buttonBox.right
-        const delta = distanceToRight + 50
-        buttonA.style.right = `${-delta}px`
-      }
-    }, 300)
-  }, 100)
+  //   setTimeout(() => {
+  //     const buttonA = shadowRoot?.querySelector(
+  //       "#taoprompt-floating-button",
+  //     ) as HTMLElement
+  //     if (!buttonA) return
+  //     const buttonBox = buttonA?.getBoundingClientRect()
+  //     if (buttonBox && buttonA) {
+  //       const distanceToRight = window.innerWidth - buttonBox.right
+  //       const delta = distanceToRight + 50
+  //       buttonA.style.right = `${-delta}px`
+  //     }
+  //   }, 300)
+  // }, 100)
 }
 
 function initPreview() {

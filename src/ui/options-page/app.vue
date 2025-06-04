@@ -1,12 +1,44 @@
 <script setup lang="ts">
 import { Notivue, Notification } from "notivue"
-import IndexPage from "./pages/index.vue"
-import PromptsPage from "./pages/prompts.vue"
+import { useLocaleLang } from "src/composables/useLocale"
+import { baseUrl } from "@/const"
+
+import { listenMessages } from "src/composables/useChromeExtensionMessaging"
+import { TAOPROMPT_EVENTS } from "src/const.events"
+
 const { isDark, toggleDark } = useTheme()
+const authStore = useAuthStore()
+const currentLocale = useLocaleLang()
 
 const isPrompsPage = window.location.hash === "#prompts"
+function loginHandle() {
+  const langPath = currentLocale.value === "vi" ? "/vi/" : "/"
+  window.open(`${baseUrl}${langPath}extension-login`, "_blank")
+}
+function authFetch() {
+    authStore.login().then(() => {
+        if (authStore.isAuthenticated) {
+            authStore.getUser()
+        }
+    })
+}
 
-onMounted(() => {})
+function listenEvents() {
+    listenMessages((message, sender, sendResponse) => {
+        switch (message.type) {
+            case TAOPROMPT_EVENTS.AUTH_UPDATE:
+                if (message.payload) {
+                    authFetch()
+                }
+                return true
+        }
+    })
+}
+
+onMounted(() => {
+  authFetch()
+  listenEvents()
+})
 </script>
 
 <template>
@@ -17,7 +49,17 @@ onMounted(() => {})
     <div
       class="prose pt-18 prompts-page dark:!bg-gray-900 !bg-gray-100 ml-4"
     >
-      <RouterView />
+      <RouterView v-if="authStore.isAuthenticated"/>
+      <div v-else class="flex items-center justify-center h-full">
+        <UButton
+        @click="loginHandle"
+        color="primary"
+        size="xl"
+        class="cursor-pointer justify-center h-[48px]"
+      >
+        {{ $t("home.signIn") }}
+      </UButton>
+      </div>
       <!-- <IndexPage v-if="!isPrompsPage" />
       <PromptsPage v-else /> -->
     </div>

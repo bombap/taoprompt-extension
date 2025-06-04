@@ -15,8 +15,6 @@
 
 <script setup lang="ts">
 import type { TabsItem } from '@nuxt/ui'
-import { listenMessages } from "src/composables/useChromeExtensionMessaging"
-import { TAOPROMPT_EVENTS } from "src/const.events"
 import PersonalLibrary from '../components/PersonalLibrary.vue'
 
 const authStore = useAuthStore()
@@ -35,30 +33,10 @@ const items = ref<TabsItem[]>([
     },
 ])
 
-function authFetch() {
-    authStore.login().then(() => {
-        if (authStore.isAuthenticated) {
-            authStore.getUser()
-        }
-    })
-}
 
-function listenEvents() {
-    listenMessages((message, sender, sendResponse) => {
-        switch (message.type) {
-            case TAOPROMPT_EVENTS.AUTH_UPDATE:
-                if (message.payload) {
-                    authFetch()
-                }
-                return true
-        }
-    })
-}
 
 authStore.getConfig()
 
 onMounted(() => {
-    authFetch()
-    listenEvents()
 })
 </script>

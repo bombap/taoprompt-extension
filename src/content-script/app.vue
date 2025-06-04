@@ -117,6 +117,54 @@ const isGenerating = ref(false);
 const isThinking = ref(false);
 const prevInputValue = ref('')
 const openDrawer = ref(false)
+const floatingButton = ref<HTMLElement | null>(null)
+const isDragging = ref(false)
+const initialY = ref(0)
+const initialTop = ref(0)
+// Config for floating button positioning
+const floatingButtonConfig = {
+  minTopPx: 100,         // Minimum distance from top of viewport in pixels
+  maxBottomMarginPx: 80, // Margin from bottom of viewport in pixels
+  defaultPositionPercent: 100, // Default position as percentage between min and max (0-100)
+  storageKey: 'taoprompt-button-position-percent' // Key for localStorage
+}
+
+// Get saved position from localStorage or use default
+const getSavedPositionPercent = (): number => {
+  try {
+    const savedValue = localStorage.getItem(floatingButtonConfig.storageKey)
+    if (savedValue !== null) {
+      const parsedValue = parseFloat(savedValue)
+      if (!isNaN(parsedValue) && parsedValue >= 0 && parsedValue <= 100) {
+        return parsedValue
+      }
+    }
+  } catch (error) {
+    console.error('Error reading from localStorage:', error)
+  }
+  return floatingButtonConfig.defaultPositionPercent
+}
+
+// Save position to localStorage
+const savePositionPercent = (percent: number) => {
+  try {
+    localStorage.setItem(floatingButtonConfig.storageKey, percent.toString())
+  } catch (error) {
+    console.error('Error saving to localStorage:', error)
+  }
+}
+
+// Current position percent (from localStorage or default)
+const positionPercent = ref(getSavedPositionPercent())
+
+// Calculate button position based on percentage between min and max
+const calculateButtonPosition = () => {
+  const maxTop = window.innerHeight - floatingButtonConfig.maxBottomMarginPx
+  const availableSpace = maxTop - floatingButtonConfig.minTopPx
+  return floatingButtonConfig.minTopPx + (availableSpace * positionPercent.value / 100)
+}
+
+const buttonPosition = ref(calculateButtonPosition())
 
 const formData = ref<CreatePromptSchema>({
   prompt: '',
@@ -431,7 +479,133 @@ function notify(message: string) {
 }
 
 
+const startDrag = (event: MouseEvent) => {
+  // Prevent default to avoid text selection during drag
+  event.preventDefault()
+  event.stopPropagation()
+  
+  if (!floatingButton.value) return
+  
+  // Get the actual current position from the DOM
+  const computedStyle = window.getComputedStyle(floatingButton.value)
+  const topValue = computedStyle.top
+  initialTop.value = parseFloat(topValue) || buttonPosition.value
+  
+  isDragging.value = true
+  initialY.value = event.clientY
+  
+  // Add event listeners for drag and release
+  document.addEventListener('mousemove', onDrag)
+  document.addEventListener('mouseup', stopDrag)
+}
+
+// Use a variable to track the last animation frame request
+let animationFrameId: number | null = null
+
+// Track if we've moved during drag to distinguish between click and drag
+let hasMoved = false
+
+const onDrag = (event: MouseEvent) => {
+  if (!isDragging.value || !floatingButton.value) return
+  
+  // Prevent default and stop propagation
+  event.preventDefault()
+  event.stopPropagation()
+  
+  // Mark that we've moved during this drag session
+  // This helps distinguish between a click and a drag
+  const deltaY = Math.abs(event.clientY - initialY.value)
+  if (deltaY > 3) { // Consider it a move if we've moved more than 3px
+    hasMoved = true
+  }
+  
+  // Cancel any pending animation frame
+  if (animationFrameId !== null) {
+    cancelAnimationFrame(animationFrameId)
+  }
+  
+  // Use requestAnimationFrame for smoother performance
+  animationFrameId = requestAnimationFrame(() => {
+    if (!floatingButton.value) return
+    
+    // Calculate the vertical movement in pixels
+    const deltaY = event.clientY - initialY.value
+    
+    // Calculate new top position in pixels
+    let newTop = initialTop.value + deltaY
+    
+    // Constrain to keep button within viewport using config values
+    const maxTop = window.innerHeight - floatingButtonConfig.maxBottomMarginPx
+    newTop = Math.max(floatingButtonConfig.minTopPx, Math.min(maxTop, newTop))
+    
+    // Apply the new position directly to the DOM for smoother performance
+    floatingButton.value.style.top = `${newTop}px`
+    
+    // Reset animation frame ID
+    animationFrameId = null
+  })
+}
+    
+const stopDrag = (event: MouseEvent) => {
+  if (!isDragging.value) return
+  
+  // Cancel any pending animation frame
+  if (animationFrameId !== null) {
+    cancelAnimationFrame(animationFrameId)
+    animationFrameId = null
+  }
+  
+  // Update the reactive buttonPosition value with the final position
+  if (floatingButton.value) {
+    const computedStyle = window.getComputedStyle(floatingButton.value)
+    const topValue = computedStyle.top
+    buttonPosition.value = parseFloat(topValue) || buttonPosition.value
+    
+    // Calculate and save the position as a percentage
+    const maxTop = window.innerHeight - floatingButtonConfig.maxBottomMarginPx
+    const availableSpace = maxTop - floatingButtonConfig.minTopPx
+    if (availableSpace > 0) {
+      const newPercent = Math.min(100, Math.max(0, 
+        ((buttonPosition.value - floatingButtonConfig.minTopPx) / availableSpace) * 100
+      ))
+      positionPercent.value = newPercent
+      savePositionPercent(newPercent)
+    }
+  }
+  
+  // If we've moved during the drag, prevent the click event from firing
+  if (hasMoved) {
+    // Add a small timeout to prevent the click event from firing
+    setTimeout(() => {
+      hasMoved = false
+    }, 100)
+  }
+  
+  isDragging.value = false
+  document.removeEventListener('mousemove', onDrag)
+  document.removeEventListener('mouseup', stopDrag)
+}
+
+// Initialize the button position when component is mounted
+const initButtonPosition = () => {
+  if (floatingButton.value) {
+    floatingButton.value.style.top = `${buttonPosition.value}px`
+  }
+}
+
 onMounted(() => {
+  // Set initial position
+  initButtonPosition()
+  
+  // Update position if window is resized
+  window.addEventListener('resize', () => {
+    // Recalculate position based on the percentage between min and max
+    if (floatingButton.value) {
+      buttonPosition.value = calculateButtonPosition()
+      floatingButton.value.style.top = `${buttonPosition.value}px`
+    }
+  })
+  
   sendToBackground({
     type: TAOPROMPT_EVENTS.AUTH_REQUEST,
     payload: {}
@@ -493,8 +667,14 @@ const srcPrompts = chrome.runtime.getURL("src/ui/options-page/index.html#/option
       </template>
     </UDrawer>
 
-    <div id="taoprompt-floating-button" class="taoprompt-floating-button">
-      <ButtonFlubber :tabs="['@', '|']" @open="openDrawer = true" />
+    <div id="taoprompt-floating-button" class="taoprompt-floating-button" ref="floatingButton">
+      <div class="drag-handle border border-gray-200 rounded-xl overflow-hidden shadow-lg" @mousedown.stop.prevent="startDrag">
+        <button 
+              @click="!hasMoved && (openDrawer = true)"
+              :class="cn('px-3 h-10 bg-white  text-black transition-all duration-500 cursor-pointer')">
+              <img src="@assets/logo-symbol-dark.svg" width="18">
+          </button>
+      </div>
     </div>
   </UApp>
   </div>
